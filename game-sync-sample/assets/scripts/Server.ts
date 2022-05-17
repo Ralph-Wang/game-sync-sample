@@ -7,16 +7,12 @@ const { ccclass, property } = _decorator;
 export class Server extends Component {
     @property(NetworkSimulator)
     net: NetworkSimulator = null;
-    lag: number = 0;
     fps: number = 0;
     updateDt: number = 0;
     currentDt: number = 0;
 
     @property(EditBox)
     fpsBox: EditBox = null;
-
-    @property(EditBox)
-    lagBox: EditBox = null;
 
     @property(Node)
     ball: Node = null;
@@ -29,23 +25,23 @@ export class Server extends Component {
 
     start() {
         this.updateFps();
-        this.updateLag();
         this.currentDt = 0;
     }
 
     update(dt: number) {
         if (this.currentDt >= this.updateDt) {
-            let lastId:string = this.inputN.string;
+            let lastId:number = parseInt(this.inputN.string);
             let lastPos:Vec3 = this.ball.getPosition();
             while (!this.net.isEmpty()) {
                 let msg: Message = this.net.receive();
                 lastId = msg.id;
+                msg.from = lastPos.clone();
                 lastPos = msg.apply(lastPos);
                 this.clients.forEach(client => {
-                    client.send(msg, this.lag);
+                    client.send(msg);
                 });
             }
-            this.inputN.string = lastId;
+            this.inputN.string = lastId.toString();
             this.ball.setPosition(lastPos);
             this.currentDt = 0;
         } else {
@@ -58,8 +54,8 @@ export class Server extends Component {
         this.updateDt = 1 / this.fps;
     }
 
-    updateLag() {
-        this.lag = parseInt(this.lagBox.string);
+    reset() {
+        this.ball.setPosition(0, 0)
     }
 }
 

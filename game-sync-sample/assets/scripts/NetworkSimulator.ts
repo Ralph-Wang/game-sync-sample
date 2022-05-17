@@ -5,11 +5,12 @@ const { ccclass, property } = _decorator;
 @ccclass("NetworkSimulator")
 export class NetworkSimulator extends Component {
     msgs: Array<Message> = [];
+    lag: number = 0;
 
-    send(data: Message, lag: number) {
+    send(data: Message) {
         setTimeout(() => {
             this.msgs.push(data);
-        }, lag)
+        }, this.lag)
     }
 
     receive() {
