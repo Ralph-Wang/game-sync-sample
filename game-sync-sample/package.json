@@ -1,8 +1,8 @@
 {
+  "creator": {
+    "version": "3.5.2"
+  },
   "name": "game-sync-sample",
   "uuid": "2ba5626f-7c7f-4913-8b9c-e2b72e8877b8",
-  "version": "3.5.0",
-  "creator": {
-    "version": "3.5.0"
-  }
+  "version": "3.5.2"
 }

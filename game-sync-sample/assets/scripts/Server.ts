@@ -14,6 +14,9 @@ export class Server extends Component {
     @property(EditBox)
     fpsBox: EditBox = null;
 
+    @property(EditBox)
+    lagBox: EditBox = null;
+
     @property(Node)
     ball: Node = null;
 
@@ -52,6 +55,10 @@ export class Server extends Component {
     updateFps() {
         this.fps = parseInt(this.fpsBox.string);
         this.updateDt = 1 / this.fps;
+    }
+
+    updateLag() {
+        this.net.lag = parseInt(this.lagBox.string);
     }
 
     reset() {
